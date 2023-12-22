@@ -2,7 +2,6 @@ package dao;
 
 import config.ConexaoBancoDado;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import config.Config;
-import model.Pessoa;
+import model.Usuario;
 
 public class PessoaDao {
 
@@ -22,7 +21,7 @@ public class PessoaDao {
     private Statement smt = null;
     private Config config = new Config();
 
-    public void salvar(Pessoa pessoa) {
+    public void salvar(Usuario pessoa) {
 
         try {
 
@@ -30,7 +29,7 @@ public class PessoaDao {
 
            con  = new ConexaoBancoDado().connectionPostgreSQL();
            smt = con.createStatement();
-           String sql = "insert into pessoa (id, nome, endereco, bairro,cep) values("
+           String sql = "insert into usuario (id, nome, endereco, telefone,email) values("
                    + "'" + pessoa.getNome() + "',"
                    + "'" + pessoa.getEndereco() + "',"
                    + "'" + pessoa.getTelefone() + "');";
@@ -44,14 +43,14 @@ public class PessoaDao {
         }
     }
 
-    public void editar(Pessoa pessoa) {
+    public void editar(Usuario pessoa) {
         try {
 
             logger.info("Editar informcao da pessoa");
 
             con  = new ConexaoBancoDado().connectionPostgreSQL();
             smt = con.createStatement();
-            String sql = "update pessoa set "
+            String sql = "update usuario set "
                     + " nome='" + pessoa.getNome() + "',"
                     + " endereco='" + pessoa.getEndereco() + "',"
                     + " telefone='" + pessoa.getTelefone() + ";";
@@ -65,22 +64,21 @@ public class PessoaDao {
         }
     }
 
-    public List<Pessoa> listar() {
+    public List<Usuario> listar() {
         try {
             logger.info("Lista de todas as pessoas");
 
             con  = new ConexaoBancoDado().connectionPostgreSQL();
             smt = con.createStatement();
-            String sql = "select p.nome as USER_NAME, r.nome as RITO, l.nome as NOME_LOJA, c.nome as CARGO"
-                    + "from pessoa p "
-                    + "inner join rito r on p.id = l.idPessoa"
-                    + "inner join  cargo c on p.idCargo = c.id"
-                    + "inner join loja l on l.idPessoa = p.id;";
+            String sql = "select * from usuario p "
+                        + "inner join pertenceloja l on l.idusuario = p.id"
+                        + "inner join pertencerito r on r.idusuario = l.idusuario"
+                	+ "inner join pertencecargo c on c.idusuario = p.id;";
 
             ResultSet rs = smt.executeQuery(sql);
-            List<Pessoa> list = new ArrayList<>();
+            List<Usuario> list = new ArrayList<>();
             while (rs.next()) {
-                Pessoa pessoa = new Pessoa();
+                Usuario pessoa = new Usuario();
                 pessoa.setId(rs.getInt(1));
                 pessoa.setNome(rs.getString(2));
                 pessoa.setEndereco(rs.getString(3));
@@ -104,7 +102,7 @@ public class PessoaDao {
 
             con  = new ConexaoBancoDado().connectionPostgreSQL();
             smt = con.createStatement();
-            String sql = "DELETE FROM pessoa WHERE nome='" + nome + "'";
+            String sql = "DELETE FROM usuario WHERE nome='" + nome + "'";
             smt.executeUpdate(sql);
             con.close();
         } catch (Exception e) {
@@ -119,10 +117,11 @@ public class PessoaDao {
 
             con  = new ConexaoBancoDado().connectionPostgreSQL();
             smt = con.createStatement();
-            String sql = "select pessoa.nome, pessoa.endereco, pessoa.telefone, cargo.nome"
-                    + "    from pessoa inner join cargo  on"
-                    + "    pessoa.idCargo = cargo.id "
-                    + "    where pessoa.nome='" + nome + "'";
+            String sql = "select u.nome, u.endereco, u.telefone, g.nome"
+                    + " from usuario u "
+                    + " inner join pertencecargo c on c.idusuario = u.id"
+                    + " inner join cargo g on c.idcargo = g.id"
+                    + " where u.nome='" + nome + "'";
 
             smt.executeUpdate(sql);
             con.close();
@@ -132,7 +131,7 @@ public class PessoaDao {
         }
     }
 
-    public List<Pessoa> buscarGrau(String login, String senha) {
+    public List<Usuario> buscarGrau(String login, String senha) {
         logger.info("Buscar grau");
         try {
             con  = new ConexaoBancoDado().connectionPostgreSQL();
@@ -144,9 +143,9 @@ public class PessoaDao {
                     + "pessoa.login = '" + login + "' and pessoa.senha ='" + senha + "'";
 
             ResultSet rs = smt.executeQuery(query);
-            List<Pessoa> list = new ArrayList<>();
+            List<Usuario> list = new ArrayList<>();
             while (rs.next()) {
-                Pessoa pessoa = new Pessoa();
+                Usuario pessoa = new Usuario();
                 pessoa.setId(rs.getInt(1));
                 pessoa.setNome(rs.getString(2));
                 pessoa.setEndereco(rs.getString(3));

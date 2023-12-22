@@ -25,7 +25,7 @@ public class LoginDao {
      public List<Login> buscarLogin(String login, String senha){
             try {
               con  = new ConexaoBancoDado().connectionPostgreSQL();
-              String query ="select l.login, l.senha from login l inner join pessoa p on l.idpessoa = p.id where l.login ='"+login+"' and l.senha ='"+senha+"'";
+              String query ="select l.login, l.senha from loginusuario l inner join usuario p on l.idusuario = p.id where l.login ='"+login+"' and l.senha ='"+senha+"'";
               List<Login> usuario = new ArrayList<>();
               PreparedStatement ps = con.prepareStatement(query);
               rs = ps.executeQuery();

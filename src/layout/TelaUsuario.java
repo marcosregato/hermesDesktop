@@ -8,7 +8,7 @@ package layout;
 import controller.PessoaController;
 import dao.PessoaDao;
 import javax.swing.table.DefaultTableModel;
-import model.Pessoa;
+import model.Usuario;
 
 /**
  *
@@ -36,7 +36,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     public void listTablePessoa(){
         DefaultTableModel model = (DefaultTableModel) tablePessoa.getModel();
         PessoaDao dao = new PessoaDao();
-        for(Pessoa p : dao.listar()){
+        for(Usuario p : dao.listar()){
             model.addRow(new Object[]{
                 p.getNome(),
                 p.getTelefone()
@@ -226,7 +226,7 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
         // TODO add your handling code here:
         String nome, endereco, email;
-        Pessoa pessoa = new Pessoa();
+        Usuario pessoa = new Usuario();
         pessoa.setNome(txtNome.getText());
         pessoa.setEndereco(txtEndereco.getText());
         pessoa.setEmail(txtEmail.getText());

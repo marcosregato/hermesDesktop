@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import model.Loja;
-import model.Pessoa;
+import model.Usuario;
 import org.apache.log4j.Logger;
 
 /**
@@ -29,7 +29,7 @@ public class EnviarDao {
     private Connection con = null;
     private Statement smt = null;
 
-    public List<Pessoa> enviarParaTodo() {
+    public List<Usuario> enviarParaTodo() {
         try {
             logger.info("Lista de todas as pessoas");
 
@@ -37,9 +37,9 @@ public class EnviarDao {
             smt = con.createStatement();
             String sql = "select * from loja";
             ResultSet rs = smt.executeQuery(sql);
-            List<Pessoa> list = new ArrayList<>();
+            List<Usuario> list = new ArrayList<>();
             while (rs.next()) {
-                Pessoa pessoa = new Pessoa();
+                Usuario pessoa = new Usuario();
                 pessoa.setEmail(rs.getString(1));
                 list.add(pessoa);
             }

@@ -8,7 +8,7 @@ package controller;
 import business.EnviarMensagemBusiness;
 import dao.EnviarDao;
 import java.util.List;
-import model.Pessoa;
+import model.Usuario;
 
 /**
  *
@@ -21,7 +21,7 @@ public class EnviarController {
     public void getMensagem(List<String> listUsuario, boolean enviarTodos, String msg){
         
         if(enviarTodos == true){
-            List<Pessoa> email = dao.enviarParaTodo();
+            List<Usuario> email = dao.enviarParaTodo();
             
         }else if(listUsuario !=null){
             EnviarMensagemBusiness enviar = new EnviarMensagemBusiness();

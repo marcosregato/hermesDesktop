@@ -3,7 +3,7 @@ package controller;
 import org.apache.log4j.Logger;
 
 import dao.PessoaDao;
-import model.Pessoa;
+import model.Usuario;
 
 public class IndexController {
 	
@@ -12,7 +12,7 @@ public class IndexController {
 
     PessoaDao dao = new PessoaDao();
     
-    public void acessarSistema(Pessoa pessoa) {
+    public void acessarSistema(Usuario pessoa) {
     	try {
     		if(pessoa != null) {
         		//pessoa.setNome(txtLogin.getText());

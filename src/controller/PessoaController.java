@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import org.apache.log4j.Logger;
 import dao.PessoaDao;
-import model.Pessoa;
+import model.Usuario;
 
 public class PessoaController {
     
@@ -12,7 +12,7 @@ public class PessoaController {
 
 	PessoaDao dao = new PessoaDao();
 
-	public void salvar(Pessoa pessoa) {
+	public void salvar(Usuario pessoa) {
 		try {
 			if(pessoa != null) {
 				
@@ -26,7 +26,7 @@ public class PessoaController {
 		}
 	}
 
-	public void editar(Pessoa pessoa) {
+	public void editar(Usuario pessoa) {
 		try {
 			if(pessoa != null) {
 //				pessoa.setNome(txtNome.getText());
@@ -47,7 +47,7 @@ public class PessoaController {
 		}
 	}
 
-	public List<Pessoa> listar() {
+	public List<Usuario> listar() {
 		try {
 
 			return  dao.listar();
