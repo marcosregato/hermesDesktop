@@ -6,7 +6,7 @@
 package layout;
 
 import controller.PessoaController;
-import dao.PessoaDao;
+import dao.UsuarioDao;
 import javax.swing.table.DefaultTableModel;
 import model.Usuario;
 
@@ -35,11 +35,13 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
     
     public void listTablePessoa(){
         DefaultTableModel model = (DefaultTableModel) tablePessoa.getModel();
-        PessoaDao dao = new PessoaDao();
+        UsuarioDao dao = new UsuarioDao();
         for(Usuario p : dao.listar()){
             model.addRow(new Object[]{
                 p.getNome(),
-                p.getTelefone()
+                p.getTelefone(),
+                
+                    
             });
         }
         
@@ -67,6 +69,8 @@ public class TelaUsuario extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         comboEstado = new javax.swing.JComboBox<>();
         btSalvar = new javax.swing.JButton();
+
+        setClosable(true);
 
         tablePessoa.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         tablePessoa.setModel(new javax.swing.table.DefaultTableModel(

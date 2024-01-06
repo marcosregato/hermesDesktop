@@ -13,9 +13,9 @@ import org.apache.log4j.Logger;
 import config.Config;
 import model.Usuario;
 
-public class PessoaDao {
+public class UsuarioDao {
 
-    static Logger logger = Logger.getLogger(PessoaDao.class);
+    static Logger logger = Logger.getLogger(UsuarioDao.class);
 
     private Connection con = null;
     private Statement smt = null;
@@ -71,18 +71,18 @@ public class PessoaDao {
             con  = new ConexaoBancoDado().connectionPostgreSQL();
             smt = con.createStatement();
             String sql = "select * from usuario p "
-                        + "inner join pertenceloja l on l.idusuario = p.id"
-                        + "inner join pertencerito r on r.idusuario = l.idusuario"
-                	+ "inner join pertencecargo c on c.idusuario = p.id;";
+                        + "inner join pertenceloja l on l.idusuario = p.id "
+                        + "inner join pertencerito r on r.idusuario = l.idusuario "
+                	+ "inner join pertencecargo c on c.idusuario = p.id";
 
             ResultSet rs = smt.executeQuery(sql);
             List<Usuario> list = new ArrayList<>();
             while (rs.next()) {
                 Usuario pessoa = new Usuario();
-                pessoa.setId(rs.getInt(1));
-                pessoa.setNome(rs.getString(2));
-                pessoa.setEndereco(rs.getString(3));
-                pessoa.setTelefone(rs.getString(4));
+                pessoa.setNome(rs.getString(1));
+                pessoa.setEndereco(rs.getString(2));
+                pessoa.setTelefone(rs.getString(3));
+                pessoa.setEmail(rs.getString(4));
                 list.add(pessoa);
             }
             con.close();

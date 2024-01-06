@@ -2,7 +2,7 @@ package controller;
 
 import org.apache.log4j.Logger;
 
-import dao.PessoaDao;
+import dao.UsuarioDao;
 import model.Usuario;
 
 public class IndexController {
@@ -10,7 +10,7 @@ public class IndexController {
 	static Logger logger = Logger.getLogger(IndexController.class);
 
 
-    PessoaDao dao = new PessoaDao();
+    UsuarioDao dao = new UsuarioDao();
     
     public void acessarSistema(Usuario pessoa) {
     	try {

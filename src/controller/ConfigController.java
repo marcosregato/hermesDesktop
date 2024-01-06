@@ -5,7 +5,7 @@
  */
 package controller;
 
-import dao.PessoaDao;
+import dao.UsuarioDao;
 import org.apache.log4j.Logger;
 
 /**
